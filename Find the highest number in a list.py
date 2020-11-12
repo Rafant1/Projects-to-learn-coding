@@ -49,4 +49,4 @@ def look_for_the_heighest_number(list):
 def main(list):
     look_for_the_heighest_number(list)
 
-main(input())
+main(numbers)
