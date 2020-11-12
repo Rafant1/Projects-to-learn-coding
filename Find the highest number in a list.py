@@ -10,6 +10,9 @@ numbers = [-8, 42, 2, 33, 54, 68, 32, -2, -365, 61, 154, 132, 248, 64, 232, 302,
 #By cause of the situation, I wrote a series of if statements to check if the value of the last position of the index has the heighest value
 #and if so, to print it as the highest number of the list.
 
+
+#Edit!!! Looked for another soultions and now I know that we can write this functions using very few lines of coded with for loop
+#However, I will leave this in my repository as a testimony of my coding trainings
 def look_for_the_heighest_number(list):
     the_heighest = 0
     position1 = 0
@@ -46,4 +49,4 @@ def look_for_the_heighest_number(list):
 def main(list):
     look_for_the_heighest_number(list)
 
-main(numbers)
+main(input())
