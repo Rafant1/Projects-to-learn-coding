@@ -3,7 +3,7 @@
 import requests
 
 
-def planet_info():
+def get_planet():
     r2 = requests.get('https://swapi.dev/api/planets/')
     r2_dict = r2.json()
     print('About which planet you would like to get more information?')
@@ -25,8 +25,8 @@ def planet_info():
             name_list = []
 
             for element in planet['residents']:
-                person = requests.get(element)
-                person_dict = person.json()
+                element = requests.get(element)
+                person_dict = element.json()
                 name_list.append(person_dict['name'])
 
             if name_list:
@@ -35,5 +35,5 @@ def planet_info():
             else:
                 print("There are not any known fameous people born on this planet.")
 
-
+get_planet()
 
