@@ -2,6 +2,49 @@
 # API documentation url address: https://swapi.dev/documentation
 import requests
 
+def check_name():
+    # First, we create a for loop to establish connection with every API url address.
+    # Then we iterate through elements in each address to get access to key 'results' in dictionary
+    # and we save that information as a list (but the elements inside the list stay as dictipnary).
+    # Then we use for loop, to get each key name and other for loop to check if user's input name
+    # is the same as any existing value of keys in key 'results' dictionary.
+    # how the information is packed:
+    # {'previous': None, 'results': [{'name': 'Tatooine', 'rotation_period': 23'}]
+
+
+    url_adresses = ['http://swapi.dev/api/people/',
+                    'http://swapi.dev/api/planets/',
+                    'http://swapi.dev/api/films/',
+                    'http://swapi.dev/api/species/',
+                    'http://swapi.dev/api/vehicles/',
+                    'http://swapi.dev/api/starships/']
+
+    check_presence = input('write a name to check if it is present in our database: ')
+    check_presence = check_presence.title()
+
+    list = []
+    correct_guess = []
+
+    for element in url_adresses:
+        element = requests.get(element)
+        category_dict = element.json()
+        for element in category_dict['results']:
+            list.append(element)
+
+    for element in list:
+        try:
+            guess = element
+        except KeyError:
+            print('blad')
+
+        for key in guess:
+            if check_presence == guess[key]:
+                print('this name appears in our database')
+                correct_guess.append(check_presence)
+
+    if not correct_guess:
+        print('unfortunately, there is no such name in our dictionary')
+
 
 def get_person():
     r1 = requests.get('https://swapi.dev/api/people/')
@@ -22,11 +65,15 @@ def get_person():
             print('skin color:',person['skin_color'])
             print('eye color:',person['eye_color'])
 
+            #home_world key value is url, that's why we had to send another request
             home_world = requests.get(person['homeworld'])
             home_world_dict = home_world.json()
             print('homeworld:',home_world_dict['name'])
 
             films_list = []
+
+            # We use for loop here because some keys' values are urls, so we have to send another request
+            # The same situation will appear in other get functions
             for element in person['films']:
                 element = requests.get(element)
                 films_dict = element.json()
