@@ -3,7 +3,7 @@
 import requests
 
 def check_name():
-    global guess
+
     url_adresses = ['http://swapi.dev/api/people/',
                     'http://swapi.dev/api/planets/',
                     'http://swapi.dev/api/films/',
@@ -67,12 +67,13 @@ def get_person():
             print('gender:',person['gender'])
             print('birth year:', person['birth_year'])
             print('height [in centimeters]:',person['height'])
-            print('mass: [in kilograms]',person['mass'])
+            print('mass [in kilograms]:',person['mass'])
             print('hair color:',person['hair_color'])
             print('skin color:',person['skin_color'])
             print('eye color:',person['eye_color'])
 
             #home_world key value is url, that's why we had to send another request
+            #in home_world there is only one url, so we don't have to use for loop
             home_world = requests.get(person['homeworld'])
             home_world_dict = home_world.json()
             print('homeworld:',home_world_dict['name'])
@@ -122,5 +123,63 @@ def get_planet():
                 print("There are not any known fameous people born on this planet.")
 
 
-check_name()
-get_person()
+def get_film():
+    r3 = requests.get('https://swapi.dev/api/films/')
+    r3_dict = r3.json()
+    print('About which film would you like to get more information?')
+
+    for film in r3_dict['results']:
+        print(film['title'])
+
+    player_choice = input('film\'s title: ')
+    for film in r3_dict['results']:
+        if film['title'] == player_choice:
+            print('\ntitle:',film['title'])
+            print('\ndirector:', film['director'])
+            print('producer[s]:', film['producer'])
+            print('release date:', film['release_date'])
+            print('which film in the Star Wars saga:',film['episode_id'])
+            print('\nopening crawl:')
+            print(film['opening_crawl'])
+
+            characters_list = []
+            for element in film['characters']:
+                element = requests.get(element)
+                characters_dict = element.json()
+                characters_list.append(characters_dict['name'])
+            print('\ncharacters that are seen in this film: ', end= '')
+            print(*characters_list, sep=', ')
+
+            planets_list = []
+            for element in film['planets']:
+                element = requests.get(element)
+                planets_dict = element.json()
+                planets_list.append(planets_dict['name'])
+            print('planets that appear in this film: ', end='')
+            print(*planets_list, sep=', ')
+
+            starships_list = []
+            for element in film['starships']:
+                element = requests.get(element)
+                starships_dict = element.json()
+                starships_list.append(starships_dict['name'])
+            print('starships presented in this film: ', end='')
+            print(*starships_list, sep=', ')
+
+            vehicles_list = []
+            for element in film['vehicles']:
+                element = requests.get(element)
+                vehicles_dict = element.json()
+                vehicles_list.append(vehicles_dict['name'])
+            print('vehicles that appear in this film: ', end='')
+            print(*vehicles_list, sep=', ')
+
+            species_list = []
+            for element in film['species']:
+                element = requests.get(element)
+                species_dict = element.json()
+                species_list.append(species_dict['name'])
+            print('species that are seen in this film: ', end='')
+            print(*species_list, sep=', ')
+
+
