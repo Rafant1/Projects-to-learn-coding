@@ -3,15 +3,7 @@
 import requests
 
 def check_name():
-    # First, we create a for loop to establish connection with every API url address.
-    # Then we iterate through elements in each address to get access to key 'results' in dictionary
-    # and we save that information as a list (but the elements inside the list stay as dictipnary).
-    # Then we use for loop, to get each key name and other for loop to check if user's input name
-    # is the same as any existing value of keys in key 'results' dictionary.
-    # how the information is packed:
-    # {'previous': None, 'results': [{'name': 'Tatooine', 'rotation_period': 23'}]
-
-
+    global guess
     url_adresses = ['http://swapi.dev/api/people/',
                     'http://swapi.dev/api/planets/',
                     'http://swapi.dev/api/films/',
@@ -19,11 +11,26 @@ def check_name():
                     'http://swapi.dev/api/vehicles/',
                     'http://swapi.dev/api/starships/']
 
+    # Why are there 3 check_presence variables?
+    # Because we want to find the user's input inside the API's base even if it is introduced with small letter
+    # (which do variable check_presence and check_presence_2
+    # in our API there are also names like X-wing. In this case, title method doesn't work because it thinks that
+    # x and wing are two separate words. In order to fix this situation (for example, if user writes x-wing), we use
+    # capitalize method
     check_presence = input('write a name to check if it is present in our database: ')
-    check_presence = check_presence.title()
+    check_presence_2 = check_presence.title()
+    check_presence_3 = check_presence.capitalize()
 
     list = []
     correct_guess = []
+
+    # First, we create a for loop to establish connection with every API url address.
+    # Then we iterate through elements in each address to get access to key 'results' in dictionary
+    # and we save that information as a list (but the elements inside the list stay as dictipnary).
+    # Then we use for loop, to get each key name and other for loop to check if user's input name
+    # is the same as any existing value of keys in key 'results' dictionary.
+    # how the information is packed:
+    # {'previous': None, 'results': [{'name': 'Tatooine', 'rotation_period': 23'}]
 
     for element in url_adresses:
         element = requests.get(element)
@@ -38,7 +45,7 @@ def check_name():
             print('blad')
 
         for key in guess:
-            if check_presence == guess[key]:
+            if check_presence == guess[key] or check_presence_2 == guess[key] or check_presence_3 == guess[key]:
                 print('this name appears in our database')
                 correct_guess.append(check_presence)
 
@@ -115,5 +122,5 @@ def get_planet():
                 print("There are not any known fameous people born on this planet.")
 
 
+check_name()
 get_person()
-
