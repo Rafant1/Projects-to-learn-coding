@@ -183,3 +183,45 @@ def get_film():
             print(*species_list, sep=', ')
 
 
+def get_species():
+    r4 = requests.get('https://swapi.dev/api/species/')
+    r4_dict = r4.json()
+    print('About which species would you like to get more information?')
+
+    for species in r4_dict['results']:
+        print(species['name'])
+
+    player_choice = input('species\' name: ')
+    for species in r4_dict['results']:
+        if species['name'] == player_choice:
+            print('\nname:',species['name'])
+            print('classification:',species['classification'])
+            print('designation:',species['designation'])
+            print('average height [in centimeters]:',species['average_height'])
+            print('skin color[s]:',species['skin_colors'])
+            print('hair color[s]:',species['hair_colors'])
+            print('eye color[s]:',species['eye_colors'])
+            print('average lifespan [in years]:',species['average_lifespan'])
+
+            home_world = requests.get(species['homeworld'])
+            home_world_dict = home_world.json()
+            print('homeworld:', home_world_dict['name'])
+            print('language:',species['language'])
+
+            people_list = []
+            for element in species['people']:
+                element = requests.get(element)
+                people_dict = element.json()
+                people_list.append(people_dict['name'])
+            print('famous character[s] of this species: ', end='')
+            print(*people_list, sep=', ')
+
+            films_list = []
+            for element in species['films']:
+                element = requests.get(element)
+                films_dict = element.json()
+                films_list.append(films_dict['title'])
+            print('film[s] in which appears this species: ', end='')
+            print(*films_list, sep=', ')
+
+
