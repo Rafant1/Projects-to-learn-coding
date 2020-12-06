@@ -2,6 +2,7 @@
 # API documentation url address: https://swapi.dev/documentation
 import requests
 
+
 def check_name():
 
     url_adresses = ['http://swapi.dev/api/people/',
@@ -56,7 +57,7 @@ def check_name():
 def get_person():
     r1 = requests.get('https://swapi.dev/api/people/')
     r1_dict = r1.json()
-    print('About which person would you like to get more information?')
+    print('\nAbout which person would you like to get more information?')
     for person in r1_dict['results']:
         print(person['name'])
 
@@ -93,7 +94,7 @@ def get_person():
 def get_planet():
     r2 = requests.get('https://swapi.dev/api/planets/')
     r2_dict = r2.json()
-    print('About which planet would you like to get more information?')
+    print('\nAbout which planet would you like to get more information?')
 
     for planet in r2_dict['results']:
         print(planet['name'])
@@ -126,7 +127,7 @@ def get_planet():
 def get_film():
     r3 = requests.get('https://swapi.dev/api/films/')
     r3_dict = r3.json()
-    print('About which film would you like to get more information?')
+    print('\nAbout which film would you like to get more information?')
 
     for film in r3_dict['results']:
         print(film['title'])
@@ -186,7 +187,7 @@ def get_film():
 def get_species():
     r4 = requests.get('https://swapi.dev/api/species/')
     r4_dict = r4.json()
-    print('About which species would you like to get more information?')
+    print('\nAbout which species would you like to get more information?')
 
     for species in r4_dict['results']:
         print(species['name'])
@@ -228,7 +229,7 @@ def get_species():
 def get_vehicle():
     r5 = requests.get('https://swapi.dev/api/vehicles/')
     r5_dict = r5.json()
-    print('About which vehicle would you like to get more information?')
+    print('\nAbout which vehicle would you like to get more information?')
 
     for vehicle in r5_dict['results']:
         print(vehicle['name'])
@@ -261,7 +262,7 @@ def get_vehicle():
 def get_starship():
     r6 = requests.get('https://swapi.dev/api/starships/')
     r6_dict = r6.json()
-    print('About which starship would you like to get more information?')
+    print('\nAbout which starship would you like to get more information?')
 
     for starship in r6_dict['results']:
         print(starship['name'])
@@ -317,6 +318,41 @@ def user_options():
     7 - check the info about a specific starship that appears in the universe
     ''')
 
+def main_loop():
+    user_choice = None
+    possible_choices = ('0','1','2','3','4','5','6','7')
 
-greeting()
-user_options()
+    while user_choice != '0':
+        user_options()
+        user_choice = input('your choice: ')
+        if user_choice not in possible_choices:
+            print('you selected an option that doesn\'t exist. Try again!')
+            continue
+        elif user_choice == '1':
+            check_name()
+            input('press any key to continue: ')
+        elif user_choice == '2':
+            get_person()
+            input('press any key to continue: ')
+        elif user_choice == '3':
+            get_planet()
+            input('press any key to continue: ')
+        elif user_choice == '4':
+            get_film()
+            input('press any key to continue: ')
+        elif user_choice == '5':
+            get_species()
+            input('press any key to continue: ')
+        elif user_choice == '6':
+            get_vehicle()
+            input('press any key to continue: ')
+        elif user_choice == '7':
+            get_starship()
+            input('press any key to continue: ')
+
+
+def main():
+    greeting()
+    main_loop()
+
+main()
