@@ -306,7 +306,8 @@ def greeting():
 
 
 def user_options():
-    print('''0 - exit the program
+    print('''
+    0 - exit the program
     1 - check if the info about a specific thing is present in our database
     2 - check the info about a specific character that appears in the universe
     3 - check the info about a specific planet that appears in the universe
@@ -315,3 +316,7 @@ def user_options():
     6 - check the info about a specific vehicle that appears in the universe
     7 - check the info about a specific starship that appears in the universe
     ''')
+
+
+greeting()
+user_options()
