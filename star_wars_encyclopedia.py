@@ -225,3 +225,35 @@ def get_species():
             print(*films_list, sep=', ')
 
 
+def get_vehicle():
+    r5 = requests.get('https://swapi.dev/api/vehicles/')
+    r5_dict = r5.json()
+    print('About which vehicle would you like to get more information?')
+
+    for vehicle in r5_dict['results']:
+        print(vehicle['name'])
+
+    player_choice = input('vehicle\'s name: ')
+    for vehicle in r5_dict['results']:
+        if vehicle['name'] == player_choice:
+            print('\nname:',vehicle['name'])
+            print('model:',vehicle['model'])
+            print('manufacturer:',vehicle['manufacturer'])
+            print('cost [in credits]:',vehicle['cost_in_credits'])
+            print('length [in meters]:',vehicle['length'])
+            print('max_atmosphering_speed [in km/h]:',vehicle['max_atmosphering_speed'])
+            print('crew:',vehicle['crew'])
+            print('passengers:',vehicle['passengers'])
+            print('cargo capacity [in kilograms]:',vehicle['cargo_capacity'])
+            print('consumables:',vehicle['consumables'])
+            print('vehicle class:',vehicle['vehicle_class'])
+            print('pilots:',vehicle['pilots'])
+
+            films_list = []
+            for element in vehicle['films']:
+                element = requests.get(element)
+                films_dict = element.json()
+                films_list.append(films_dict['title'])
+            print('film[s] in which appears this vehicle: ', end='')
+            print(*films_list, sep=', ')
+
