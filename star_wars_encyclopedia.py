@@ -257,3 +257,44 @@ def get_vehicle():
             print('film[s] in which appears this vehicle: ', end='')
             print(*films_list, sep=', ')
 
+
+def get_starship():
+    r6 = requests.get('https://swapi.dev/api/starships/')
+    r6_dict = r6.json()
+    print('About which starship would you like to get more information?')
+
+    for starship in r6_dict['results']:
+        print(starship['name'])
+
+    player_choice = input('starship\'s name: ')
+    for starship in r6_dict['results']:
+        if starship['name'] == player_choice:
+            print('\nname:',starship['name'])
+            print('model:',starship['model'])
+            print('manufacturer:',starship['manufacturer'])
+            print('cost [in credits]:',starship['cost_in_credits'])
+            print('length [in meters]:',starship['length'])
+            print('max atmosphering speed [in km/h]:',starship['max_atmosphering_speed'])
+            print('crew:',starship['crew'])
+            print('passengers:',starship['passengers'])
+            print('cargo capacity [in kilograms]:',starship['cargo_capacity'])
+            print('consumables:',starship['consumables'])
+            print('hyperdrive rating:',starship['hyperdrive_rating'])
+            print('megalight:',starship['MGLT'])
+            print('starship class:',starship['starship_class'])
+
+            pilots_list = []
+            for element in starship['pilots']:
+                element = requests.get(element)
+                pilots_dict = element.json()
+                pilots_list.append(pilots_dict['name'])
+            print('fameous pilot[s] who use this starship: ', end='')
+            print(*pilots_list, sep=', ')
+
+            films_list = []
+            for element in starship['films']:
+                element = requests.get(element)
+                films_dict = element.json()
+                films_list.append(films_dict['title'])
+            print('film[s] in which appears this starship: ', end='')
+            print(*films_list, sep=', ')
